@@ -1,0 +1,9 @@
+{
+  "id": "votemanager",
+  "name": "VoteManager",
+  "version": "${project.version}",
+  "description": "Vote management plugin for Velocity",
+  "authors": ["marioenache"],
+  "dependencies": [],
+  "main": "ro.marioenache.votemanager.velocity.VoteManagerVelocity"
+}

@@ -1,0 +1,44 @@
+# VoteManager Configuration (Velocity)
+debug: true
+
+# Database Configuration
+database:
+  host: localhost
+  port: 3306
+  name: votemanager
+  username: root
+  password: password
+
+# Performance Settings
+performance:
+  # Cache TTL (Time To Live) in milliseconds
+  cache-ttl:
+    user: 300000        # 5 minutes
+    vote-party: 60000   # 1 minute
+    pending-votes: 30000 # 30 seconds
+  # Performance metrics
+  metrics:
+    enabled: true
+    interval: 5         # Report interval in minutes
+
+# Vote Settings
+votes:
+  reset-hour: 4         # Hour of day when votes reset (0-23)
+  reminder-command: "tellraw %player% {\"text\":\"Don't forget to vote today!\",\"color\":\"gold\"}"
+
+# Votifier Configuration
+votifier:
+  host: 0.0.0.0      # The host to bind the vote listener to
+  port: 25567         # The port to listen for votes on
+
+# Vote Party Settings
+vote-party:
+  enabled: true
+  global-counting: true    # Count votes globally for all servers
+  default-goal: 25         # Default number of votes to trigger a party
+  server-goals:            # Per-server goals (overrides default)
+    lobby: 20
+    survival: 30
+    skyblock: 25
+  excluded-servers:        # Servers to exclude from vote parties
+    - lobby

@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'ro.marioenache'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://repo.velocitypowered.com/snapshots/' }
+    maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+}
+
+dependencies {
+    // Spigot API
+    compileOnly 'io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT'
+    
+    // Velocity API
+    compileOnly 'com.velocitypowered:velocity-api:3.1.0'
+    
+    // HikariCP for database connection pooling
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+    
+    // MySQL Connector
+    implementation 'mysql:mysql-connector-java:8.0.28'
+    
+    // JSON Simple for JSON parsing
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    
+    // SLF4J API
+    compileOnly 'org.slf4j:slf4j-api:1.7.32'
+    
+    // SLF4J Simple (for testing)
+    testImplementation 'org.slf4j:slf4j-simple:1.7.32'
+    
+    // Lombok for annotations
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    
+    // PlaceholderAPI
+    compileOnly 'me.clip:placeholderapi:2.11.3'
+}
+
+shadowJar {
+    archiveBaseName.set('VoteManager')
+    archiveClassifier.set('')
+    archiveVersion.set(version)
+    
+    relocate 'com.zaxxer.hikari', 'ro.marioenache.votemanager.libs.hikari'
+    relocate 'org.json.simple', 'ro.marioenache.votemanager.libs.json'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.named('build') {
+    dependsOn(shadowJar)
+}

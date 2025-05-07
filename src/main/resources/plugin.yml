@@ -1,0 +1,28 @@
+name: VoteManager
+version: '${project.version}'
+main: ro.marioenache.votemanager.spigot.VoteManagerSpigot
+api-version: '1.19'
+author: marioenache
+description: Vote management plugin for Spigot
+softdepend: [PlaceholderAPI]
+
+commands:
+  votemanager:
+    description: VoteManager main command
+    usage: /votemanager <reload|help>
+    aliases: [vm]
+    permission: votemanager.admin
+
+permissions:
+  votemanager.admin:
+    description: Access to all VoteManager admin commands
+    default: op
+  votemanager.admin.reload:
+    description: Access to reload the plugin
+    default: op
+  votemanager_vip:
+    description: Gives access to VIP vote rewards
+    default: false
+  votemanager_donor:
+    description: Gives access to donor vote rewards
+    default: false

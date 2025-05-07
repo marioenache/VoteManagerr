@@ -1,0 +1,75 @@
+# VoteManager Configuration (Spigot)
+debug: false
+
+# Server name (must match the name in Velocity)
+server-name: lobby
+
+# Database Configuration
+database:
+  host: localhost
+  port: 3306
+  name: votemanager
+  username: root
+  password: password
+
+# Performance Settings
+performance:
+  # Cache TTL (Time To Live) in milliseconds
+  cache-ttl:
+    user: 300000        # 5 minutes
+    vote-party: 60000   # 1 minute
+    pending-votes: 30000 # 30 seconds
+  # Performance metrics
+  metrics:
+    enabled: true
+    interval: 5         # Report interval in minutes
+
+# Vote Commands
+vote-commands:
+  default: # Default commands for all vote services
+    - "give %player% diamond 1"
+    - "minecraft:give %player% minecraft:gold_ingot 1"
+  CraftServers: # Commands for a specific vote service
+    - "give %player% diamond 2"
+    - "minecraft:give %player% minecraft:emerald 1"
+
+# Permission Rewards
+permission-rewards:
+  enabled: true
+  rewards:
+    votemanager_vip:
+      - "give %player% diamond 5"
+    votemanager_donor:
+      - "give %player% diamond_block 1"
+
+# Vote Party
+vote-party:
+  enabled: true
+  goal: 25              # Votes needed to trigger a party (override from proxy)
+  use-randomized-commands: true # Whether to use the new randomized command system
+  
+  # Legacy command format (used if use-randomized-commands is false)
+  commands:
+    - "broadcast &a&lVote Party! &fEveryone who voted gets rewards!"
+    - "execute as @a run give @s diamond 5"
+  
+  # New format with chance and delay
+  randomized-commands:
+    - command: "broadcast &a&lVote Party! &fEveryone gets rewards!"
+      chance: 1.0       # 100% chance to execute (between 0.0 and 1.0)
+      delay: 0          # Execute immediately (in ticks, 20 ticks = 1 second)
+    - command: "give %player% diamond 5"
+      chance: 0.8       # 80% chance to execute for each player
+      delay: 20         # 1 second delay after previous command
+    - command: "give %player% emerald 2"
+      chance: 0.5       # 50% chance to execute for each player
+      delay: 20         # 1 second delay after previous command
+    - command: "give %player% diamond_block 1"
+      chance: 0.2       # 20% chance to execute for each player
+      delay: 20         # 1 second delay after previous command
+    - command: "broadcast &e%player% got lucky in the vote party!"
+      chance: 0.1       # 10% chance to execute for each player
+      delay: 40         # 2 second delay after previous command
+  
+  # Only reward players with processed votes
+  only-reward-voters: true
